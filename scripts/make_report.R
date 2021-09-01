@@ -6,8 +6,8 @@ source("functions/make_nowcasting_report.R")
 
 series <- "Real GDP: Russia" # Nowcasting "Real GDP: Russia"
 period <- "2021Q3" # Nowcasting quarter
-old <- "2021-08-30" # old vintage
-new <- "2021-08-31" # new vintage
+old <- "2021-08-31" # old vintage
+new <- "2021-09-01" # new vintage
 Res <- readRDS("output/ResDFM.rds") # Load estimated parameters
 
 # Res$Mx[63] <- (1.015 ^ (0.25) - 1) * 100 # potential growth in MRC1
