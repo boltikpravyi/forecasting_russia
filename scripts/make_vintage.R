@@ -45,7 +45,7 @@ spec_base <- "input/Spec.File.xlsx" %>%
   read_excel() %>% 
   dplyr::filter(Model == 1) %>% 
   dplyr::select(SeriesRawName, SeriesName, SeriesID, Category, Units) %>% 
-  inner_join(spec_temp) %>% 
+  left_join(spec_temp, by = "SeriesRawName") %>% 
   mutate(Delay = as.numeric(Delay)) %>% 
   dplyr::select(SeriesName, SeriesID, Units, Category, Source, LastValue, Updated, Delay)
 
@@ -54,7 +54,7 @@ spec_delay <- spec_base %>%
   as.matrix()
 
 spec_base <- spec_base %>% 
-  dplyr::select(SeriesName, SeriesID, Category, Source, LastValue, Updated)
+  dplyr::select(SeriesName, SeriesID, Units, Category, Source, LastValue, Updated)
 
 info <- list(Base = spec_base, Blocks = spec_blocks, Frequency = spec_frequency,
              Transformation = spec_trans, Delay = spec_delay)
@@ -163,7 +163,7 @@ nwcst_dataset <- database %>%
   ungroup() %>% 
   dplyr::select(Date, SeriesName, Value, Value_SA, Change_SA, Category, Source, LastValue, Updated)
 
-write.xlsx(x = nwcst_dataset, file = "output/data/temp_file.xlsx", col.names = T, row.names = T, sheetName = "data", append = T)
+write.xlsx(x = nwcst_dataset, file = "output/data/temp_file.xlsx", col.names = T, row.names = T, sheetName = "data", append = F)
 
 database <- list(Base = Base, X = X, Time = Time)
 
